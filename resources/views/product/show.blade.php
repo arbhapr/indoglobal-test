@@ -1,5 +1,5 @@
 @extends('_layouts.main')
-@section('title', 'Category: ' . $category->name)
+@section('title', 'Category')
 @section('breadcrumb')
     <li class="breadcrumb-item">Manage</li>
     <li class="breadcrumb-item"><a href="{{ route('manage.category.index') }}">Category</a></li>
@@ -32,7 +32,7 @@
                                     <tr>
                                         <td>{{ $n + 1 }}</td>
                                         <td>{{ $item->name }}</td>
-                                        <td>{{ number_format($item->qty) }} items</td>
+                                        <td>{{ number_format($item->stock) }} items</td>
                                         <td>$ {{ number_format($item->price) }}</td>
                                         <td>
                                             <div class="btn-group">

@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-lightblue elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+        <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
             style="opacity: .8">
         <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
@@ -31,15 +31,12 @@
                         </p>
                     </a>
                 </li>
-
-                @if (auth()->user()->role_id == \App\Models\Role::ADMIN)
-                <li class="nav-header">MANAGEMENT</li>
                 <li class="nav-item">
-                    <a href="{{ route('manage.category.index') }}"
-                        class="nav-link  {{ request()->is('category') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-window-restore"></i>
+                    <a href="{{ route('my-profile.edit') }}"
+                        class="nav-link  {{ request()->is('my-profile') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user"></i>
                         <p>
-                            Categories
+                            My Profile
                         </p>
                     </a>
                 </li>
@@ -52,7 +49,19 @@
                         </p>
                     </a>
                 </li>
-                {{-- <li class="nav-item">
+
+                @if (auth()->user()->role_id == \App\Models\Role::ADMIN)
+                    <li class="nav-header">MANAGEMENT</li>
+                    <li class="nav-item">
+                        <a href="{{ route('manage.category.index') }}"
+                            class="nav-link  {{ request()->is('category') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-window-restore"></i>
+                            <p>
+                                Categories
+                            </p>
+                        </a>
+                    </li>
+                    {{-- <li class="nav-item">
                     <a href="{{ route('users.index') }}"
                         class="nav-link  {{ request()->is('users') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-package"></i>
@@ -64,15 +73,6 @@
                 @endif
 
                 <li class="nav-header">ACCOUNT</li>
-                <li class="nav-item">
-                    <a href="{{ route('my-profile.edit') }}"
-                        class="nav-link  {{ request()->is('my-profile') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>
-                            My Profile
-                        </p>
-                    </a>
-                </li>
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link bg-danger"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

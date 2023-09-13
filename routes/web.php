@@ -35,6 +35,6 @@ Route::group([
     ], function () {
         // Route::resource('user', 'UserController');
         Route::resource('product', 'ProductController');
-        Route::resource('category', 'CategoryController');
+        Route::resource('category', 'CategoryController')->except(['show']);
     });
 });

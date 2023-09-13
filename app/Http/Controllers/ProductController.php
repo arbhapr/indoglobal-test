@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\MCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -13,7 +18,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::orderBy('name')->get();
+
+        $data = [
+            'products' => $products,
+        ];
+        return view('product.index', $data);
     }
 
     /**
@@ -23,7 +33,12 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = MCategory::orderBy('name')->get();
+        $data = [
+            'categories' => $categories,
+        ];
+
+        return view('product.create', $data);
     }
 
     /**
@@ -34,18 +49,41 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        DB::beginTransaction();
+        try {
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'category_id' => ['required', 'exists:m_categories,id'],
+                    'name'        => ['required'],
+                    'qty'         => ['required', 'min:0'],
+                    'price'       => ['required', 'min:0'],
+                ],
+                [
+                    'qty.required' => 'The stock field is required.'
+                ]
+            );
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->with('errorForm', $validator->errors()->getMessages())
+                    ->withInput();
+            }
+            $params = $validator->validate();
+
+            $data = Product::create($params);
+
+            DB::commit();
+            return redirect()
+                ->route('manage.product.index')
+                ->with('success', 'Created successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            return redirect()->back()
+                ->with('error', $e->getMessage())
+                ->withInput();
+        }
     }
 
     /**
@@ -56,7 +94,20 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        try {
+            $categories = MCategory::orderBy('name')->get();
+            $product = Product::findOrFail($id);
+
+            $data = [
+                'id' => $id,
+                'item' => $product,
+                'categories' => $categories,
+            ];
+            return view('product.edit', $data);
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -68,7 +119,41 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'category_id' => ['required', 'exists:m_categories,id'],
+                    'name'        => ['required'],
+                    'qty'         => ['required', 'min:0'],
+                    'price'       => ['required', 'min:0'],
+                ],
+                [
+                    'qty.required' => 'The stock field is required.'
+                ]
+            );
+
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->with('errorForm', $validator->errors()->getMessages())
+                    ->withInput();
+            }
+            $params = $validator->validate();
+
+            $data = Product::find($id)->update($params);
+
+            DB::commit();
+            return redirect()
+                ->route('manage.product.index')
+                ->with('success', 'Updated successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            return redirect()->back()
+                ->with('error', $e->getMessage())
+                ->withInput();
+        }
     }
 
     /**
@@ -79,6 +164,20 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $data = Product::find($id)->delete();
+
+            DB::commit();
+            return redirect()
+                ->route('manage.product.index')
+                ->with('success', 'Updated successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            return redirect()->back()
+                ->with('error', $e->getMessage())
+                ->withInput();
+        }
     }
 }
