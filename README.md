@@ -10,3 +10,31 @@ for more information about me you can access it at:
 
 ## Source
 - [Boilerplate Template](https://gitlab.com/arbhapr/boilerplate-adminlte-3)
+
+
+## Deployment
+
+To deploy this project
+
+```bash
+  composer update
+  composer install
+  php artisan migrate:fresh --seed
+```
+
+Login account
+```bash
+--- Admin Account
+username: admin
+password: secret
+
+--- Employee Account
+username: employee
+password: secret
+
+username: employee2
+password: secret
+
+username: employee3
+password: secret
+```
