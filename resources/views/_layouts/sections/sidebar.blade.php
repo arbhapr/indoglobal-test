@@ -32,9 +32,41 @@
                     </a>
                 </li>
 
+                @if (auth()->user()->role_id == \App\Models\Role::ADMIN)
+                <li class="nav-header">MANAGEMENT</li>
+                <li class="nav-item">
+                    <a href="{{ route('manage.category.index') }}"
+                        class="nav-link  {{ request()->is('category') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-window-restore"></i>
+                        <p>
+                            Categories
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('manage.product.index') }}"
+                        class="nav-link  {{ request()->is('product') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-weight"></i>
+                        <p>
+                            Products
+                        </p>
+                    </a>
+                </li>
+                {{-- <li class="nav-item">
+                    <a href="{{ route('users.index') }}"
+                        class="nav-link  {{ request()->is('users') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-package"></i>
+                        <p>
+                            Users
+                        </p>
+                    </a>
+                </li> --}}
+                @endif
+
                 <li class="nav-header">ACCOUNT</li>
                 <li class="nav-item">
-                    <a href="{{ route('my-profile.edit') }}" class="nav-link  {{ request()->is('my-profile') ? 'active' : '' }}">
+                    <a href="{{ route('my-profile.edit') }}"
+                        class="nav-link  {{ request()->is('my-profile') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
                             My Profile

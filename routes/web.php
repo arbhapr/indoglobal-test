@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Auth::routes();
 
 Route::group([
@@ -26,5 +27,14 @@ Route::group([
     ], function () {
         Route::get('/', ['uses' => 'ProfileController@edit'])->name('edit');
         Route::put('/', ['uses' => 'ProfileController@update'])->name('update');
+    });
+
+    Route::group([
+        'prefix' => '/management',
+        'as' => 'manage.'
+    ], function () {
+        // Route::resource('user', 'UserController');
+        Route::resource('product', 'ProductController');
+        Route::resource('category', 'CategoryController');
     });
 });
