@@ -37,4 +37,14 @@ Route::group([
         Route::resource('product', 'ProductController');
         Route::resource('category', 'CategoryController')->except(['show']);
     });
+
+    Route::group([
+        'prefix' => '/cart',
+        'as' => 'cart.'
+    ], function () {
+        Route::get('/', ['uses' => 'CartController@index'])->name('index');
+        Route::get('/{id}', ['uses' => 'CartController@confirmToCart'])->name('confirm');
+        Route::post('/{id}', ['uses' => 'CartController@addToCart'])->name('store');
+    });
+
 });

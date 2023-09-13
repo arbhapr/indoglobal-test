@@ -61,6 +61,15 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('cart.index') }}"
+                            class="nav-link  {{ request()->is('cart') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-file-excel"></i>
+                            <p>
+                                Reports
+                            </p>
+                        </a>
+                    </li>
                     {{-- <li class="nav-item">
                     <a href="{{ route('users.index') }}"
                         class="nav-link  {{ request()->is('users') ? 'active' : '' }}">

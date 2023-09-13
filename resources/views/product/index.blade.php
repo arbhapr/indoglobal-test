@@ -40,8 +40,8 @@
                                         <td>
                                             <div class="btn-group">
                                                 <a class="btn btn-primary btn-sm"
-                                                    href="{{ route('manage.product.show', [$item->id]) }}"><i
-                                                        class="fa fa-eye"></i></a>
+                                                    href="{{ route('cart.confirm', [$item->id]) }}"><i
+                                                        class="fa fa-shopping-cart"></i></a>
                                                 @if (auth()->user()->role_id == \App\Models\Role::ADMIN)
                                                     <a class="btn btn-warning text-light btn-sm"
                                                         href="{{ route('manage.product.edit', [$item->id]) }}"><i
