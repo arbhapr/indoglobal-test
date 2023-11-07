@@ -46,5 +46,4 @@ Route::group([
         Route::get('/{id}', ['uses' => 'CartController@confirmToCart'])->name('confirm');
         Route::post('/{id}', ['uses' => 'CartController@addToCart'])->name('store');
     });
-
 });

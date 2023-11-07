@@ -35,22 +35,24 @@
 
 <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-@if(\Session::has('unauthorized'))
-<script>
-    toastr.options = {
-        "positionClass": "toast-top-center",
-    }
-    toastr.error("{!! \Session::get('unauthorized') !!}")
-</script>
+@if (\Session::has('unauthorized'))
+    <script>
+        toastr.options = {
+            "positionClass": "toast-top-center",
+        }
+        toastr.error("{!! \Session::get('unauthorized') !!}")
+    </script>
 @endif
 
-@if(\Session::has('maintenance'))
-<script>
-    toastr.options = {
-        "positionClass": "toast-top-center",
-    }
-    toastr.warning("{!! \Session::get('maintenance') !!}")
-</script>
+@if (\Session::has('maintenance'))
+    <script>
+        toastr.options = {
+            "positionClass": "toast-top-center",
+        }
+        toastr.warning("{!! \Session::get('maintenance') !!}")
+    </script>
 @endif
+
+<script src="/js/app.js"></script>
 
 @yield('js')

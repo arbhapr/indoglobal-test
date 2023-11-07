@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group([
+    'as' => 'notif',
+    'prefix' => 'notif',
+    'namespace' => 'api',
+], function () {
+    Route::post('/', ['uses' => 'NotificationController@publish']);
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
